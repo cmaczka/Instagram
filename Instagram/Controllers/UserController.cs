@@ -16,6 +16,7 @@ namespace Instagram.Controllers
         private readonly IUserService _userService;
         private ResponseDTO<LoginResponseDto> _response;
         private readonly IMapper _mapper;
+        private ResponseDTO<List<User>> _userResponse;
 
 
         public UserController(IUserService userService,
@@ -24,6 +25,7 @@ namespace Instagram.Controllers
             _userService = userService;
             this._mapper = mapper;
             _response = new();
+            _userResponse= new();
         }
 
         [HttpPost("registrar")] // /api/usuario/registrar
@@ -55,6 +57,29 @@ namespace Instagram.Controllers
             _response.IsSuccessfull = true;
             return Ok(_response);
 
+        }
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> GetUsers()
+        {
+
+            var users = await _userService.GetAllAsync();
+
+            if (users == null)
+            {
+                _userResponse.StatusCode = HttpStatusCode.BadRequest;
+                _userResponse.IsSuccessfull = false;
+                _userResponse.Errors.Add("Not Found");
+                return BadRequest(_response);
+            }
+
+
+
+            _userResponse.IsSuccessfull = true;
+            _userResponse.StatusCode = HttpStatusCode.OK;
+            _userResponse.Data = users;
+            return Ok(_response);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Instagram.Models;
+﻿using Instagram.DTO;
+using Instagram.Models;
 using Instagram.Repository;
 
 namespace Instagram.Services
@@ -6,6 +7,11 @@ namespace Instagram.Services
     public class UserService : IUserService
     {
         private readonly IUserRepository _userRepository;
+
+        public Task<LoginResponseDto> Login(LoginRequestDTO loginRequestDto)
+        {
+            return _userRepository.Login(loginRequestDto);
+        }
 
         public UserService(IUserRepository userRepository)
         {
@@ -29,9 +35,9 @@ namespace Instagram.Services
             throw new NotImplementedException();
         }
 
-        public Task<List<User>> GetAllAsync()
+        public async Task<List<User>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            return await _userRepository.GetAllAsync();
         }
 
         public Task<User> GetByIdAsync(int? id)
@@ -47,6 +53,6 @@ namespace Instagram.Services
         public Task<bool> UpdateAsync(User entity)
         {
             throw new NotImplementedException();
-        }
+        }      
     }
 }

@@ -7,5 +7,7 @@ namespace Instagram.Repository
     {
         Task<bool> CreateAsync(User entity);
         bool IsUniqueUser(string userName);
+        Task<LoginResponseDto> Login(LoginRequestDTO logingRequestDto);
+        Task<List<User>> GetAllAsync();
     }
 }
