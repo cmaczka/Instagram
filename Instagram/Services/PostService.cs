@@ -18,6 +18,10 @@ namespace Instagram.Services
         {
             return await _postRepository.CreateAsync(entity);
         }
+        public async Task<bool> LikeAsync(Like entity) 
+        {
+            return await _postRepository.LikeAsync(entity);
+        }
 
 
         public Task<bool> DeleteAsync(int? id)

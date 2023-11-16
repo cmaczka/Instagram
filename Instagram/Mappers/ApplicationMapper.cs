@@ -13,6 +13,7 @@ namespace Instagram.Mappers
             CreateMap<UserResponseDTO, User>();
             CreateMap<User, UserResponseDTO>();
             CreateMap<PostRequestDto, Post>();
+            CreateMap<LikeRequestDTO, Like>();
         }
     }
 }

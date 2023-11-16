@@ -23,6 +23,22 @@ namespace Instagram.Repository
 
             return true;
         }
-       
+        public async Task<bool> LikeAsync(Like entity)
+        {
+            var like = _db.Likes.FirstOrDefault(l => l.IdPost == entity.Id);
+ 
+            if (like == null)
+            {
+                await _db.Likes.AddAsync(entity);
+                await _db.SaveChangesAsync();
+            }
+            else
+            {
+                like.IsLike = entity.IsLike;
+                await _db.SaveChangesAsync();
+            }
+            return true;
+        }
+
     }
 }

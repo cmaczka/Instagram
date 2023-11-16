@@ -42,5 +42,24 @@ namespace Instagram.Controllers
             return Ok(_response);
 
         }
+
+        [HttpPost("Like")]
+        public async Task<IActionResult> LikePost([FromBody] LikeRequestDTO modelo)
+        {
+            var like = _mapper.Map<Like>(modelo);
+
+            var result = await _postService.LikeAsync(like);
+            if (result == false)
+            {
+                _response.StatusCode = HttpStatusCode.BadRequest;
+                _response.IsSuccessfull = false;
+                _response.Errors.Add("There was an error");
+                return BadRequest(_response);
+            }
+            _response.StatusCode = HttpStatusCode.OK;
+            _response.IsSuccessfull = true;
+            return Ok(_response);
+
+        }
     }
 }

@@ -3,9 +3,8 @@ using Instagram.Models;
 
 namespace Instagram.Services
 {
-    public interface IUserService : IGenericService<User>
+    public interface IPostService : IGenericService<Post>
     {
-        bool IsUniqueUser(string userName);
-        Task<LoginResponseDto> Login(LoginRequestDTO loginRequestDto);
+        Task<bool> LikeAsync(Like entity);
     }
 }
