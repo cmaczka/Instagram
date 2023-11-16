@@ -1,6 +1,7 @@
 ﻿using Instagram.DTO;
 using Instagram.Models;
 using Instagram.Repository;
+using Microsoft.AspNetCore.Identity;
 
 namespace Instagram.Services
 {
@@ -10,7 +11,10 @@ namespace Instagram.Services
 
         public Task<LoginResponseDto> Login(LoginRequestDTO loginRequestDto)
         {
-            return _userRepository.Login(loginRequestDto);
+            var response= _userRepository.Login(loginRequestDto);
+            response.Result.IsValidPassword = BCrypt.Net.BCrypt.EnhancedVerify(loginRequestDto.Password, response.Result.User.Password);
+            return response;
+
         }
 
         public UserService(IUserRepository userRepository)

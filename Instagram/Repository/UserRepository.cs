@@ -37,8 +37,7 @@ namespace Instagram.Repository
 
         public async Task<LoginResponseDto> Login(LoginRequestDTO logingRequestDto)
         {
-            var usuario = await _db.Users.FirstOrDefaultAsync(u => u.UserName.ToLower() == logingRequestDto.UserName.ToLower()
-            && u.Password == logingRequestDto.Password);
+            var usuario = await _db.Users.FirstOrDefaultAsync(u => u.UserName.ToLower() == logingRequestDto.UserName.ToLower());
 
             if (usuario == null)
             {
@@ -63,7 +62,7 @@ namespace Instagram.Repository
             LoginResponseDto loginResponseDto = new()
             {
                 Token = tokenHandler.WriteToken(token),
-                User = usuario
+                User = usuario,      
             };
             return loginResponseDto;
         }

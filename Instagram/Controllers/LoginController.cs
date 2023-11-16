@@ -33,7 +33,7 @@ namespace Instagram.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
             var loginResponse = await _userService.Login(loginRequestDto);
-            if (loginResponse.User == null || string.IsNullOrEmpty(loginResponse.Token))
+            if (loginResponse.User == null || string.IsNullOrEmpty(loginResponse.Token) || !loginResponse.IsValidPassword)
             {
                 _response.StatusCode = HttpStatusCode.BadRequest;
                 _response.IsSuccessfull = false;
