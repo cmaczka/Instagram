@@ -5,6 +5,7 @@ using Instagram.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient.Server;
 using System.Net;
 
 namespace Instagram.Controllers
@@ -16,7 +17,8 @@ namespace Instagram.Controllers
         private readonly IUserService _userService;
         private ResponseDTO<LoginResponseDto> _response;
         private readonly IMapper _mapper;
-        private ResponseDTO<List<User>> _userResponse;
+        private ResponseDTO<List<UserResponseDTO>> _userResponse;
+
 
 
         public UserController(IUserService userService,
@@ -58,12 +60,12 @@ namespace Instagram.Controllers
             return Ok(_response);
 
         }
-        [HttpGet]
+        [HttpGet("GetUsers")]
+        [AllowAnonymous]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetUsers()
         {
-
             var users = await _userService.GetAllAsync();
 
             if (users == null)
@@ -73,13 +75,10 @@ namespace Instagram.Controllers
                 _userResponse.Errors.Add("Not Found");
                 return BadRequest(_response);
             }
-
-
-
             _userResponse.IsSuccessfull = true;
-            _userResponse.StatusCode = HttpStatusCode.OK;
-            _userResponse.Data = users;
-            return Ok(_response);
+            _userResponse.StatusCode = HttpStatusCode.OK;          
+            _userResponse.Data = _mapper.Map<List<User>, List<UserResponseDTO>>(users);
+            return Ok(_userResponse);
         }
     }
 }

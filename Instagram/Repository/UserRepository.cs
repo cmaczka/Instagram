@@ -68,7 +68,8 @@ namespace Instagram.Repository
         }
         public async Task<List<User>> GetAllAsync()
         {
-            return await _db.Users.ToListAsync();
+            var users= await _db.Users.Select(u => new User() { UserName= u.UserName }).ToListAsync();
+            return users;
         }
     }
 }
