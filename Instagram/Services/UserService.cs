@@ -21,7 +21,7 @@ namespace Instagram.Services
         public async Task<bool> CreateAsync(User entity)
         {
             entity.CreationDate = DateTime.Now;
-
+            entity.Password= BCrypt.Net.BCrypt.EnhancedHashPassword(entity.Password, 10);
             return await _userRepository.CreateAsync(entity);
         }
 
