@@ -9,8 +9,8 @@ namespace Instagram.Models
         [ForeignKey("IdPost")]
         public int IdUser { get; set; }
 
-        [ForeignKey("IdPost")]
-        public int IdPost { get; set; }
+        [ForeignKey("PostId")]
+        public int PostId { get; set; }
         public string? Comments { get; set; }
     }
 }

@@ -25,7 +25,7 @@ namespace Instagram.Repository
         }
         public async Task<bool> LikeAsync(Like entity)
         {
-            var like = _db.Likes.FirstOrDefault(l => l.IdPost == entity.Id);
+            var like = _db.Likes.FirstOrDefault(l => l.PostId == entity.PostId);
  
             if (like == null)
             {

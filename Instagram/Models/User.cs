@@ -12,7 +12,5 @@ namespace Instagram.Models
         public string NickName { get; set; }
         public string Role { get; set; }
         public DateTime? CreationDate { get; set; }
-        public virtual ICollection<User> Followers { get; set; } = new List<User>();
-        public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
     }
 }

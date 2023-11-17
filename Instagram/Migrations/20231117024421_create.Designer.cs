@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Instagram.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20231116030207_crearmodelo")]
-    partial class crearmodelo
+    [Migration("20231117024421_create")]
+    partial class create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,26 +59,18 @@ namespace Instagram.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdPost")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdPostNavigationId")
-                        .HasColumnType("int");
-
                     b.Property<int>("IdUser")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdUserNavigationId")
                         .HasColumnType("int");
 
                     b.Property<bool?>("IsLike")
                         .HasColumnType("bit");
 
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("IdPostNavigationId");
-
-                    b.HasIndex("IdUserNavigationId");
+                    b.HasIndex("PostId");
 
                     b.ToTable("Likes");
                 });
@@ -94,7 +86,7 @@ namespace Instagram.Migrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("UserId")
+                    b.Property<int>("UserId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -172,28 +164,20 @@ namespace Instagram.Migrations
 
             modelBuilder.Entity("Instagram.Models.Like", b =>
                 {
-                    b.HasOne("Instagram.Models.Post", "IdPostNavigation")
+                    b.HasOne("Instagram.Models.Post", null)
                         .WithMany("Likes")
-                        .HasForeignKey("IdPostNavigationId")
+                        .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Instagram.Models.User", "IdUserNavigation")
-                        .WithMany()
-                        .HasForeignKey("IdUserNavigationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("IdPostNavigation");
-
-                    b.Navigation("IdUserNavigation");
                 });
 
             modelBuilder.Entity("Instagram.Models.Post", b =>
                 {
                     b.HasOne("Instagram.Models.User", null)
                         .WithMany("Posts")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Instagram.Models.User", b =>
