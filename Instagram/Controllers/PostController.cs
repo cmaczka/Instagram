@@ -61,5 +61,35 @@ namespace Instagram.Controllers
             return Ok(_response);
 
         }
+        [HttpPost]
+        [Route("Commnent")]
+        public async Task<IActionResult> CommentPost([FromBody] CommentRequestDTO modelo)
+        {
+            try
+            {
+                var comment = _mapper.Map<Comment>(modelo);
+
+                var result = await _postService.CommentAsync(comment);
+                if (result == false)
+                {
+                    _response.StatusCode = HttpStatusCode.BadRequest;
+                    _response.IsSuccessfull = false;
+                    _response.Errors.Add("There was an error");
+                    return BadRequest(_response);
+                }
+                _response.StatusCode = HttpStatusCode.OK;
+                _response.IsSuccessfull = true;
+                return Ok(_response);
+            }
+            catch (Exception ex)
+            {
+                _response.StatusCode = HttpStatusCode.InternalServerError;
+                _response.IsSuccessfull = false;
+                _response.Errors.Add("There was an error adding the comment");
+                return BadRequest(_response);
+            }
+            
+
+        }
     }
 }

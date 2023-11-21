@@ -22,7 +22,10 @@ namespace Instagram.Services
         {
             return await _postRepository.LikeAsync(entity);
         }
-
+        public async Task<bool> CommentAsync(Comment entity)
+        {
+            return await _postRepository.CommentAsync(entity);
+        }
 
         public Task<bool> DeleteAsync(int? id)
         {

@@ -11,7 +11,7 @@ namespace Instagram.Services
 
         public Task<LoginResponseDto> Login(LoginRequestDTO loginRequestDto)
         {
-            var response= _userRepository.Login(loginRequestDto);
+            var response= _userRepository.Login(loginRequestDto);            
             response.Result.IsValidPassword = BCrypt.Net.BCrypt.EnhancedVerify(loginRequestDto.Password, response.Result.User.Password);
             return response;
 

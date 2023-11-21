@@ -39,6 +39,12 @@ namespace Instagram.Repository
             }
             return true;
         }
+        public async Task<bool> CommentAsync(Comment entity)
+        {
+            _db.Add(entity);
+            await _db.SaveChangesAsync();
+            return true;
+        }
 
     }
 }

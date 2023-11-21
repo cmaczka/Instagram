@@ -20,7 +20,11 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.25.0" />
   </ItemGroup>
-
+  
+  <ItemGroup>
+    <InternalsVisibleTo Include="XUnitTest" />
+  </ItemGroup>
+  
   <ItemGroup>
     <Folder Include="Migrations\" />
   </ItemGroup>

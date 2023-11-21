@@ -7,5 +7,6 @@ namespace Instagram.Repository
     {
         Task<bool> CreateAsync(Post entity);
         Task<bool> LikeAsync(Like entity);
+        Task<bool> CommentAsync(Comment entity);
     }
 }

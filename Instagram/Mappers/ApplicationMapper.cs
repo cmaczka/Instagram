@@ -14,6 +14,7 @@ namespace Instagram.Mappers
             CreateMap<User, UserResponseDTO>();
             CreateMap<PostRequestDto, Post>();
             CreateMap<LikeRequestDTO, Like>();
+            CreateMap<CommentRequestDTO, Comment>();
         }
     }
 }

@@ -14,7 +14,7 @@ namespace Instagram.Controllers
     {
         private readonly IUserService _userService;
         private readonly IMapper _mapper;
-        private ResponseDTO<LoginResponseDto> _response;
+        private LoginResponseDto _response;
        
 
         public LoginController(IUserService userService,
@@ -30,19 +30,18 @@ namespace Instagram.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
+        public async Task<ActionResult> Login([FromBody] LoginRequestDTO loginRequestDto)
         {
-            var loginResponse = await _userService.Login(loginRequestDto);
+            LoginResponseDto loginResponse = await _userService.Login(loginRequestDto);
             if (loginResponse.User == null || string.IsNullOrEmpty(loginResponse.Token) || !loginResponse.IsValidPassword)
             {
-                _response.StatusCode = HttpStatusCode.BadRequest;
-                _response.IsSuccessfull = false;
-                _response.Errors.Add("Username or Password is incorrect");
+                _response.StatusCode = StatusCodes.Status400BadRequest;
+                _response.Errors = "Username or Password is incorrect";
                 return BadRequest(_response);
             }
-            _response.IsSuccessfull = true;
-            _response.StatusCode = HttpStatusCode.OK;
-            _response.Data = loginResponse;
+            _response.StatusCode = StatusCodes.Status200OK;
+            loginResponse.User.Password = "PRUEBA";
+            _response.Token = loginResponse.Token;
             return Ok(_response);
         }
 
